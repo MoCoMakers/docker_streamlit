@@ -12,5 +12,5 @@ You can use my [referral link](https://m.do.co/c/a42cc842048c) to get $100 worth
 To run locally, try:
 ```
 docker build . -t streamlit_app
-docker run -p 8501:8501 streamlit_app
+docker run -p 8501:8501 -v ~/docker_streamlit/app:/app streamlit_app
 ```
