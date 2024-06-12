@@ -14,3 +14,11 @@ To run locally, try:
 docker build . -t streamlit_app
 docker run -p 8501:8501 -v ~/docker_streamlit/app:/app streamlit_app
 ```
+
+Tips for the running updates on the server
+```
+git fetch origin
+git merge --ff origin main
+docker build . -t streamlit_app
+docker run -p 8501:8501 -v ~/docker_streamlit/app:/app streamlit_app
+```
