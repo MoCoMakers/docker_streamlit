@@ -22,3 +22,18 @@ git merge --ff origin main
 docker build . -t streamlit_app
 docker run -p 8501:8501 -v ~/docker_streamlit/app:/app streamlit_app
 ```
+
+**Important Note for Production Deployment:**
+When deploying to your final environment (like DigitalOcean App Platform), you may need to log into the Docker container to manually install requirements if they're not being installed automatically. You can do this by:
+
+1. Accessing your container's shell:
+   ```bash
+   docker exec -it <container_name> /bin/bash
+   ```
+
+2. Installing requirements manually:
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+3. Restarting your application to ensure all dependencies are properly loaded.
