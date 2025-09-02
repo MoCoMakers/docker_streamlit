@@ -47,6 +47,8 @@ You can use my [referral link](https://m.do.co/c/a42cc842048c) to get $100 worth
 
 To run locally, try:
 ```bash
+# Copy requirements.txt from the soft link (Docker can't follow symlinks during build)
+cp app/requirements.txt requirements.txt
 # Build the Docker image
 docker build . -t streamlit_app
 # Run the container with the soft-linked app folder mounted
@@ -74,6 +76,8 @@ Tips for the running updates on the server
 ```bash
 git fetch origin
 git merge --ff origin main
+# Copy requirements.txt from the soft link
+cp app/requirements.txt requirements.txt
 docker build . -t streamlit_app
 docker run -p 8501:8501 -v ~/docker_streamlit/app:/app streamlit_app
 ```

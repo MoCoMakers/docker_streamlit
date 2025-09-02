@@ -3,9 +3,8 @@ FROM python:3.12-bullseye
 # hadolint ignore=DL3020
 WORKDIR app/
 
-# hadolint ignore=DL3020
-# Copy requirements.txt from the soft-linked app folder
-COPY app/requirements.txt .
+# Copy requirements.txt (copied from soft link before build)
+COPY requirements.txt .
 
 RUN python -m pip install --upgrade pip
 RUN python -m pip install -r requirements.txt
