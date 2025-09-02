@@ -47,7 +47,7 @@ You can use my [referral link](https://m.do.co/c/a42cc842048c) to get $100 worth
 
 To run locally, try:
 ```bash
-# Build the Docker image (only needs requirements.txt)
+# Build the Docker image
 docker build . -t streamlit_app
 # Run the container with the soft-linked app folder mounted
 docker run -p 8501:8501 -v ~/docker_streamlit/app:/app streamlit_app
