@@ -32,8 +32,11 @@ docker_streamlit/
 ├── Dockerfile
 ├── LICENSE
 ├── README.md
+├── run_nfstreamlit.sh
 └── app -> ../nf_streamlit/app/  (soft link)
 ```
+
+**Important:** The `nf_streamlit/app/` directory contains the **live data folder** and should be mounted as a volume when running the container to ensure the application has access to current data.
 
 To deploy you first need to click on "Use this template" and then simply log into your Digital Ocean account and click on "Apps" -> "Launch Your App" -> "Github" and select the corresponding Github repository.
 
@@ -43,13 +46,32 @@ You can use my [referral link](https://m.do.co/c/a42cc842048c) to get $100 worth
 
 
 To run locally, try:
-```
+```bash
+# Build the Docker image (only needs requirements.txt)
 docker build . -t streamlit_app
+# Run the container with the soft-linked app folder mounted
 docker run -p 8501:8501 -v ~/docker_streamlit/app:/app streamlit_app
 ```
 
-Tips for the running updates on the server
+## Production Launch Script
+
+For production deployment, use the included launch script `run_nfstreamlit.sh`:
+
+```bash
+# Make the script executable
+chmod +x run_nfstreamlit.sh
+
+# Run the container in the background with live data volume
+./run_nfstreamlit.sh
 ```
+
+This script:
+- Runs the container in the background using `nohup`
+- Mounts the live data folder from `~/nf_streamlit/app` to `/app` in the container
+- Ensures the application has access to current data files
+
+Tips for the running updates on the server
+```bash
 git fetch origin
 git merge --ff origin main
 docker build . -t streamlit_app
@@ -57,16 +79,4 @@ docker run -p 8501:8501 -v ~/docker_streamlit/app:/app streamlit_app
 ```
 
 **Important Note for Production Deployment:**
-When deploying to your final environment (like DigitalOcean App Platform), you may need to log into the Docker container to manually install requirements if they're not being installed automatically. You can do this by:
-
-1. Accessing your container's shell:
-   ```bash
-   docker exec -it <container_name> /bin/bash
-   ```
-
-2. Installing requirements manually:
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-3. Restarting your application to ensure all dependencies are properly loaded.
+The Dockerfile automatically installs requirements from the soft-linked app folder during build. For DigitalOcean App Platform deployment, ensure the soft link is properly set up before building, or use the production launch script for local deployment with live data access.
